@@ -18,4 +18,6 @@ public interface ZooService
     Zoo update(Zoo zoo, long id);
 
     void delete(long id);
+
+    int getZooCount();
 }
