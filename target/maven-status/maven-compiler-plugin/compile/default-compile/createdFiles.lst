@@ -1,0 +1,10 @@
+com\aaroncb\javazoos\javazoos\repository\ZooRepository.class
+com\aaroncb\javazoos\javazoos\model\Animal.class
+com\aaroncb\javazoos\javazoos\repository\AnimalRepository.class
+com\aaroncb\javazoos\javazoos\JavaZoosApplication.class
+com\aaroncb\javazoos\javazoos\model\Telephone.class
+com\aaroncb\javazoos\javazoos\repository\TelephoneRepository.class
+com\aaroncb\javazoos\javazoos\controllers\AnimalController.class
+com\aaroncb\javazoos\javazoos\model\Zoo.class
+com\aaroncb\javazoos\javazoos\controllers\ZooController.class
+com\aaroncb\javazoos\javazoos\controllers\TelephoneController.class
