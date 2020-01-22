@@ -1,9 +1,12 @@
 package com.aaroncb.javazoos.javazoos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.domain.Auditable;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="zoo")
@@ -15,28 +18,33 @@ public class Zoo
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long zooid;
+
+    @Column(nullable = false,
+            unique = true)
     private String zooname;
-    private String createdby;
-    private Timestamp createddate;
-    private String lastmodifiedby;
-    private Timestamp lastmodifieddate;
+
+    @OneToMany(mappedBy = "zoo", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("zoo")
+    private List<ZooTelphones> teles = new ArrayList<>();
 
     public Zoo(){}
-    public Zoo(String zooname, String createdby, Timestamp createddate, String lastmodifiedby, Timestamp lastmodifieddate)
+
+    public Zoo(String zooname, List<ZooTelphones> teles)
     {
         this.zooname = zooname;
-        this.createdby = createdby;
-        this.createddate = createddate;
-        this.lastmodifiedby = lastmodifiedby;
-        this.lastmodifieddate = lastmodifieddate;
+//        for(ZooTelphones zt : teles)
+//        {
+//            zt.setZoo(this);
+//        }
+        this.teles = teles;
     }
 
     public long getZooID() {
         return zooid;
     }
 
-    public void setZooID(long zooID) {
-        this.zooid = zooID;
+    public void setZooID(long zooid) {
+        this.zooid = zooid;
     }
 
     public String getzooname() {
@@ -47,36 +55,12 @@ public class Zoo
         this.zooname = zooname;
     }
 
-    public String getCreatedby() {
-        return createdby;
+    public List<ZooTelphones> getTeles() {
+        return teles;
     }
 
-    public void setCreatedby(String createdby) {
-        this.createdby = createdby;
-    }
-
-    public Timestamp getCreateddate() {
-        return createddate;
-    }
-
-    public void setCreateddate(Timestamp createddate) {
-        this.createddate = createddate;
-    }
-
-    public String getLastmodifiedby() {
-        return lastmodifiedby;
-    }
-
-    public void setLastmodifiedby(String lastmodifiedby) {
-        this.lastmodifiedby = lastmodifiedby;
-    }
-
-    public Timestamp getLastmodifieddate() {
-        return lastmodifieddate;
-    }
-
-    public void setLastmodifieddate(Timestamp lastmodifieddate) {
-        this.lastmodifieddate = lastmodifieddate;
+    public void setTeles(List<ZooTelphones> teles) {
+        this.teles = teles;
     }
 
     @Override
@@ -84,10 +68,7 @@ public class Zoo
         return "Zoo{" +
                 "zooid=" + zooid +
                 ", zooname='" + zooname + '\'' +
-                ", createdby='" + createdby + '\'' +
-                ", createddate=" + createddate +
-                ", lastmodifiedby='" + lastmodifiedby + '\'' +
-                ", lastmodifieddate=" + lastmodifieddate +
+                ", teles=" + teles +
                 '}';
     }
 }

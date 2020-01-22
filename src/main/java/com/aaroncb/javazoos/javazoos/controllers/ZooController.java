@@ -1,6 +1,8 @@
 package com.aaroncb.javazoos.javazoos.controllers;
 
+import com.aaroncb.javazoos.javazoos.model.Telephone;
 import com.aaroncb.javazoos.javazoos.model.Zoo;
+import com.aaroncb.javazoos.javazoos.services.TelephoneService;
 import com.aaroncb.javazoos.javazoos.services.ZooService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,6 +23,9 @@ public class ZooController
 {
     @Autowired
     private ZooService zooService;
+
+    @Autowired
+    TelephoneService telephoneService;
 
     @GetMapping(value="/zoos",
                 produces = {"application/json"})
@@ -35,6 +41,7 @@ public class ZooController
             @PathVariable long id)
     {
         Zoo zoo = zooService.findByID(id);
+        System.out.println("Zoo Controller " + zoo.getTeles());
         return new ResponseEntity<>(zoo, HttpStatus.OK);
     }
 

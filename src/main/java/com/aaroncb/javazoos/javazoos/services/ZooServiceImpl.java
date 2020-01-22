@@ -40,20 +40,17 @@ public class ZooServiceImpl implements ZooService
     public List<Zoo> findByNameLike(String name) {
         return zooRepository.findByZoonameContaining(name.toLowerCase());
     }
+
     @Transactional
     @Override
     public Zoo save(Zoo zoo) {
         Zoo newZoo = new Zoo();
 
-        Date date = new Date();
-        long time = date.getTime();
-        Timestamp ts = new Timestamp(time);
+        System.out.println("Save zoo " + zoo);
 
-        newZoo.setCreatedby(zoo.getCreatedby());
-        newZoo.setCreateddate(ts);
-        newZoo.setLastmodifiedby(zoo.getCreatedby());
-        newZoo.setLastmodifieddate(ts);
         newZoo.setzooname(zoo.getzooname());
+        System.out.println("Zoo Tele: " + zoo.getTeles());
+        newZoo.setTeles(zoo.getTeles());
 
         return zooRepository.save(newZoo);
     }
@@ -63,14 +60,11 @@ public class ZooServiceImpl implements ZooService
     public Zoo update(Zoo zoo, long id) {
         Zoo currentZoo = findByID(id);
 
-        if(zoo.getLastmodifiedby() != null){currentZoo.setLastmodifiedby(zoo.getLastmodifiedby());};
         if(zoo.getzooname() != null){currentZoo.setzooname(zoo.getzooname());};
 
         Date date = new Date();
         long time = date.getTime();
         Timestamp ts = new Timestamp(time);
-
-        zoo.setLastmodifieddate(ts);
 
         return zooRepository.save(currentZoo);
     }

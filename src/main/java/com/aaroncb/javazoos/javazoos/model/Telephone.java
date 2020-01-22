@@ -1,14 +1,16 @@
 package com.aaroncb.javazoos.javazoos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="telephone")
-public class Telephone
+public class Telephone extends Auditable
 {
 //    -- INSERT INTO telephone(phoneid, phonetype, phonenumber, zooid, createdby, createddate, lastmodifiedby, lastmodifieddate)
     @Id
@@ -17,16 +19,27 @@ public class Telephone
     private String phonetype;
     private String phonenumber;
 
-//    @OneToMany(mappedBy = "zooid",
-//                cascade = CascadeType.ALL,
-//                orphanRemoval = true)
-//    @JsonIgnoreProperties("zoo")
-//    private List<Zoo> zoo = new ArrayList<>();
+    @OneToMany(mappedBy = "tele", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("tele")
+    @JsonIgnore
+    private List<ZooTelphones> teles = new ArrayList<>();
 
-    private String createdby;
-    private long createddata;
-    private String lastmodifiedby;
-    private long lastmodifieddate;
+    public Telephone() {}
+
+    public Telephone(
+                     String phonetype,
+                     String phonenumber) {
+        this.phonetype = phonetype;
+        this.phonenumber = phonenumber;
+    }
+
+    public List<ZooTelphones> getTeles() {
+        return teles;
+    }
+
+    public void setTeles(List<ZooTelphones> teles) {
+        this.teles = teles;
+    }
 
     public long getTelephoneID() {
         return telephoneid;
@@ -52,45 +65,6 @@ public class Telephone
         this.phonenumber = phoneNumber;
     }
 
-//    public List<Zoo> getZoo() {
-//        return zoo;
-//    }
-//
-//    public void setZoo(List<Zoo> zoo) {
-//        this.zoo = zoo;
-//    }
-
-    public String getCreatedby() {
-        return createdby;
-    }
-
-    public void setCreatedby(String createdby) {
-        this.createdby = createdby;
-    }
-
-    public long getCreateddata() {
-        return createddata;
-    }
-
-    public void setCreateddata(long createddata) {
-        this.createddata = createddata;
-    }
-
-    public String getLastmodifiedby() {
-        return lastmodifiedby;
-    }
-
-    public void setLastmodifiedby(String lastmodifiedby) {
-        this.lastmodifiedby = lastmodifiedby;
-    }
-
-    public long getLastmodifieddate() {
-        return lastmodifieddate;
-    }
-
-    public void setLastmodifieddate(long lastmodifieddate) {
-        this.lastmodifieddate = lastmodifieddate;
-    }
 
     @Override
     public String toString() {
@@ -98,11 +72,7 @@ public class Telephone
                 "telephoneid=" + telephoneid +
                 ", phonetype='" + phonetype + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +
-//                ", zoo=" + zoo +
-                ", createdby='" + createdby + '\'' +
-                ", createddata=" + createddata +
-                ", lastmodifiedby='" + lastmodifiedby + '\'' +
-                ", lastmodifieddate=" + lastmodifieddate +
+                ", teles=" + teles +
                 '}';
     }
 }

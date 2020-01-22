@@ -1,4 +1,4 @@
-package com.aaroncb.javazoos.javazoos.controllers;
+package com.aaroncb.javazoos.javazoos.model;
 
 import com.aaroncb.javazoos.javazoos.model.Animal;
 import com.aaroncb.javazoos.javazoos.model.Zoo;
