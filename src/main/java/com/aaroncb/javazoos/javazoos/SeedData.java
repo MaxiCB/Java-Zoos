@@ -1,8 +1,6 @@
 package com.aaroncb.javazoos.javazoos;
 
-import com.aaroncb.javazoos.javazoos.model.Telephone;
-import com.aaroncb.javazoos.javazoos.model.Zoo;
-import com.aaroncb.javazoos.javazoos.model.ZooTelphones;
+import com.aaroncb.javazoos.javazoos.model.*;
 import com.aaroncb.javazoos.javazoos.services.TelephoneService;
 import com.aaroncb.javazoos.javazoos.services.ZooService;
 import net.bytebuddy.asm.Advice;
@@ -38,24 +36,57 @@ public class SeedData implements CommandLineRunner {
         t2 = telephoneService.save(t2);
         t3 = telephoneService.save(t3);
 
+        Animal a1 = new Animal("Test Animal Type 01");
+        Animal a2 = new Animal("Test Animal Type 02");
+        Animal a3 = new Animal("Test Animal Type 02");
+
+        a1 =
+
         System.out.println(telephoneService.findAll());
 
         ArrayList<ZooTelphones> zooTeles = new ArrayList<>();
 
-        Zoo z1 = new Zoo("Testing Zoo", new ArrayList<ZooTelphones>());
+        ArrayList<ZooAnimals> zooAnimals = new ArrayList<>();
+
+        Zoo z1 = new Zoo("Testing Zoo No Tele", new ArrayList<ZooTelphones>(), new ArrayList<ZooAnimals>());
         z1 = zooService.save(z1);
+        System.out.println("Zoo Without Telephone: " + z1 + "\n");
+
+        Zoo z2 = new Zoo("Testing Zoo With Tele", new ArrayList<ZooTelphones>(), new ArrayList<ZooAnimals>());
+        z2 = zooService.save(z2);
+
+        Zoo z3 = new Zoo("Testing Zoo With Tele and Animals", new ArrayList<ZooTelphones>(), new ArrayList<ZooAnimals>());
+        z3 = zooService.save(z2);
 
         zooTeles.add(new ZooTelphones(new Zoo(), t1));
         zooTeles.add(new ZooTelphones(new Zoo(), t2));
         zooTeles.add(new ZooTelphones(new Zoo(), t3));
 
-        z1.getTeles()
-                .add(new ZooTelphones(z1, t1));
-        z1.getTeles()
-                .add(new ZooTelphones(z1, t2));
-        z1.getTeles()
-                .add(new ZooTelphones(z1, t3));
+        zooAnimals.add(new ZooAnimals(new Zoo(), a1));
+        zooAnimals.add(new ZooAnimals(new Zoo(), a2));
+        zooAnimals.add(new ZooAnimals(new Zoo(), a3));
 
-        System.out.println(z1.toString());
+        z2.getTeles()
+                .add(new ZooTelphones(z2, t1));
+        z2.getTeles()
+                .add(new ZooTelphones(z2, t2));
+        z2.getTeles()
+                .add(new ZooTelphones(z2, t3));
+
+        z3.getTeles()
+                .add(new ZooTelphones(z3, t1));
+        z3.getTeles()
+                .add(new ZooTelphones(z3, t2));
+        z3.getTeles()
+                .add(new ZooTelphones(z3, t3));
+
+        z3.getAnimals()
+                .add(new ZooAnimals(z3, a1));
+        z3.getAnimals()
+                .add(new ZooAnimals(z3, a2));
+        z3.getAnimals()
+                .add(new ZooAnimals(z3, a3));
+
+        System.out.println(z2.toString());
     }
 }

@@ -1,6 +1,11 @@
 package com.aaroncb.javazoos.javazoos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="animal")
@@ -12,10 +17,11 @@ public class Animal
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long animalid;
     private String animaltype;
-    private String createdby;
-    private long createddate;
-    private String lastmodifiedby;
-    private long lastmodifieddate;
+
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("animal")
+    @JsonIgnore
+    private List<ZooAnimals> animals = new ArrayList<>();
 
     public Animal(){}
     public Animal(String animalType){ this.animaltype = animalType; }
@@ -36,36 +42,12 @@ public class Animal
         this.animaltype = animalType;
     }
 
-    public String getCreatedby() {
-        return createdby;
+    public List<ZooAnimals> getAnimals() {
+        return animals;
     }
 
-    public void setCreatedby(String createdby) {
-        this.createdby = createdby;
-    }
-
-    public long getCreateddate() {
-        return createddate;
-    }
-
-    public void setCreateddate(long createddate) {
-        this.createddate = createddate;
-    }
-
-    public String getLastmodifiedby() {
-        return lastmodifiedby;
-    }
-
-    public void setLastmodifiedby(String lastmodifiedby) {
-        this.lastmodifiedby = lastmodifiedby;
-    }
-
-    public long getLastmodifieddate() {
-        return lastmodifieddate;
-    }
-
-    public void setLastmodifieddate(long lastmodifieddate) {
-        this.lastmodifieddate = lastmodifieddate;
+    public void setAnimals(List<ZooAnimals> animals) {
+        this.animals = animals;
     }
 
     @Override
@@ -73,10 +55,7 @@ public class Animal
         return "Animal{" +
                 "animalid=" + animalid +
                 ", animaltype='" + animaltype + '\'' +
-                ", createdby='" + createdby + '\'' +
-                ", createddate=" + createddate +
-                ", lastmodifiedby='" + lastmodifiedby + '\'' +
-                ", lastmodifieddate=" + lastmodifieddate +
+                ", animals=" + animals +
                 '}';
     }
 }

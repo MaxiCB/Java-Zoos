@@ -27,16 +27,25 @@ public class Zoo
     @JsonIgnoreProperties("zoo")
     private List<ZooTelphones> teles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "zoo", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("zoo")
+    private List<ZooAnimals> animals = new ArrayList<>();
+
     public Zoo(){}
 
-    public Zoo(String zooname, List<ZooTelphones> teles)
+    public Zoo(String zooname, List<ZooTelphones> teles, List<ZooAnimals> animals)
     {
         this.zooname = zooname;
-//        for(ZooTelphones zt : teles)
-//        {
-//            zt.setZoo(this);
-//        }
+        for(ZooTelphones zt : teles)
+    {
+        zt.setZoo(this);
+    }
+        for(ZooAnimals za : animals)
+        {
+            za.setZoo(this);
+        }
         this.teles = teles;
+        this.animals= animals;
     }
 
     public long getZooID() {
@@ -63,12 +72,21 @@ public class Zoo
         this.teles = teles;
     }
 
+    public List<ZooAnimals> getAnimals() {
+        return animals;
+    }
+
+    public void setAnimals(List<ZooAnimals> animals) {
+        this.animals = animals;
+    }
+
     @Override
     public String toString() {
         return "Zoo{" +
                 "zooid=" + zooid +
                 ", zooname='" + zooname + '\'' +
                 ", teles=" + teles +
+                ", animals=" + animals +
                 '}';
     }
 }

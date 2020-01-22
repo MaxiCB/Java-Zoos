@@ -4,52 +4,31 @@ import com.aaroncb.javazoos.javazoos.model.Animal;
 import com.aaroncb.javazoos.javazoos.model.Zoo;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
-@Table(name="zooanimals")
-public class ZooAnimals
+@Table(name="zooanimals",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"zooid", "animalid"})})
+public class ZooAnimals extends Auditable implements Serializable
 {
 //    -- INSERT INTO zooanimals (zooid, animalid, createdby, createddate, lastmodifiedby, lastmodifieddate)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long zooanimal;
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="zooid")
     private Zoo zoo;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="animalid")
     private Animal animal;
-
-    private String createdby;
-    private long createddate;
-    private String lastmodifiedby;
-    private long lastmodifieddate;
 
     public ZooAnimals(){}
 
     public ZooAnimals(Zoo zoo,
-                      Animal animal,
-                      String createdby,
-                      long createddate,
-                      String lastmodifiedby,
-                      long lastmodifieddate)
+                      Animal animal)
     {
         this.zoo = zoo;
         this.animal = animal;
-        this.createdby = createdby;
-        this.createddate = createddate;
-        this.lastmodifiedby = lastmodifiedby;
-        this.lastmodifieddate = lastmodifieddate;
-    }
-
-    public long getZooanimal() {
-        return zooanimal;
-    }
-
-    public void setZooanimal(long zooanimal) {
-        this.zooanimal = zooanimal;
     }
 
     public Zoo getZoo() {
@@ -68,48 +47,33 @@ public class ZooAnimals
         this.animal = animal;
     }
 
-    public String getCreatedby() {
-        return createdby;
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (!(o instanceof ZooAnimals))
+        {
+            return false;
+        }
+        ZooAnimals zooAnimals = (ZooAnimals) o;
+        return getZoo().equals(zooAnimals.getZoo()) && getAnimal().equals(zooAnimals.getAnimal());
     }
 
-    public void setCreatedby(String createdby) {
-        this.createdby = createdby;
-    }
-
-    public long getCreateddate() {
-        return createddate;
-    }
-
-    public void setCreateddate(long createddate) {
-        this.createddate = createddate;
-    }
-
-    public String getLastmodifiedby() {
-        return lastmodifiedby;
-    }
-
-    public void setLastmodifiedby(String lastmodifiedby) {
-        this.lastmodifiedby = lastmodifiedby;
-    }
-
-    public long getLastmodifieddate() {
-        return lastmodifieddate;
-    }
-
-    public void setLastmodifieddate(long lastmodifieddate) {
-        this.lastmodifieddate = lastmodifieddate;
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getZoo(),
+                getAnimal());
     }
 
     @Override
     public String toString() {
         return "ZooAnimals{" +
-                "zooanimal=" + zooanimal +
-                ", zoo=" + zoo +
-                ", animal=" + animal +
-                ", createdby='" + createdby + '\'' +
-                ", createddate=" + createddate +
-                ", lastmodifiedby='" + lastmodifiedby + '\'' +
-                ", lastmodifieddate=" + lastmodifieddate +
+                ", zoo=" + zoo.getZooID() +
+                ", animal=" + animal.getAnimalID() +
                 '}';
     }
 }
