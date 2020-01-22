@@ -47,9 +47,17 @@ public class ZooController
         return new ResponseEntity<>(zoos, HttpStatus.OK);
     }
 
+    @GetMapping(value="/zoo/count",
+                produces = {"application/json"})
+    public ResponseEntity<?> getZooCount()
+    {
+        int count = zooService.getZooCount();
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/zoo",
             consumes = {"application/json"})
-    public ResponseEntity<?> addNewUser(@Valid
+    public ResponseEntity<?> addNewZoo(@Valid
                                         @RequestBody
                                                 Zoo newZoo) throws URISyntaxException
     {
