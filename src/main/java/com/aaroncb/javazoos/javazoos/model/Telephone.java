@@ -17,11 +17,11 @@ public class Telephone
     private String phonetype;
     private String phonenumber;
 
-    @OneToMany(mappedBy = "zooid",
-                cascade = CascadeType.ALL,
-                orphanRemoval = true)
-    @JsonIgnoreProperties("zoo")
-    private List<Zoo> zoo = new ArrayList<>();
+//    @OneToMany(mappedBy = "zooid",
+//                cascade = CascadeType.ALL,
+//                orphanRemoval = true)
+//    @JsonIgnoreProperties("zoo")
+//    private List<Zoo> zoo = new ArrayList<>();
 
     private String createdby;
     private long createddata;
@@ -52,13 +52,13 @@ public class Telephone
         this.phonenumber = phoneNumber;
     }
 
-    public List<Zoo> getZoo() {
-        return zoo;
-    }
-
-    public void setZoo(List<Zoo> zoo) {
-        this.zoo = zoo;
-    }
+//    public List<Zoo> getZoo() {
+//        return zoo;
+//    }
+//
+//    public void setZoo(List<Zoo> zoo) {
+//        this.zoo = zoo;
+//    }
 
     public String getCreatedby() {
         return createdby;
@@ -98,7 +98,7 @@ public class Telephone
                 "telephoneid=" + telephoneid +
                 ", phonetype='" + phonetype + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +
-                ", zoo=" + zoo +
+//                ", zoo=" + zoo +
                 ", createdby='" + createdby + '\'' +
                 ", createddata=" + createddata +
                 ", lastmodifiedby='" + lastmodifiedby + '\'' +

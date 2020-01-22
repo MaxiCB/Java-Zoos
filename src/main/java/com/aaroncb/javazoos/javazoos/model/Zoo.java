@@ -3,6 +3,7 @@ package com.aaroncb.javazoos.javazoos.model;
 import org.springframework.data.domain.Auditable;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name="zoo")
@@ -16,14 +17,14 @@ public class Zoo
     private long zooid;
     private String zooname;
     private String createdby;
-    private long createddate;
+    private Timestamp createddate;
     private String lastmodifiedby;
-    private long lastmodifieddate;
+    private Timestamp lastmodifieddate;
 
     public Zoo(){}
-    public Zoo(String zooName, String createdby, long createddate, String lastmodifiedby, long lastmodifieddate)
+    public Zoo(String zooname, String createdby, Timestamp createddate, String lastmodifiedby, Timestamp lastmodifieddate)
     {
-        this.zooname = zooName;
+        this.zooname = zooname;
         this.createdby = createdby;
         this.createddate = createddate;
         this.lastmodifiedby = lastmodifiedby;
@@ -38,12 +39,12 @@ public class Zoo
         this.zooid = zooID;
     }
 
-    public String getZooName() {
+    public String getzooname() {
         return zooname;
     }
 
-    public void setZooName(String zooName) {
-        this.zooname = zooName;
+    public void setzooname(String zooname) {
+        this.zooname = zooname;
     }
 
     public String getCreatedby() {
@@ -54,11 +55,11 @@ public class Zoo
         this.createdby = createdby;
     }
 
-    public long getCreateddate() {
+    public Timestamp getCreateddate() {
         return createddate;
     }
 
-    public void setCreateddate(long createddate) {
+    public void setCreateddate(Timestamp createddate) {
         this.createddate = createddate;
     }
 
@@ -70,11 +71,11 @@ public class Zoo
         this.lastmodifiedby = lastmodifiedby;
     }
 
-    public long getLastmodifieddate() {
+    public Timestamp getLastmodifieddate() {
         return lastmodifieddate;
     }
 
-    public void setLastmodifieddate(long lastmodifieddate) {
+    public void setLastmodifieddate(Timestamp lastmodifieddate) {
         this.lastmodifieddate = lastmodifieddate;
     }
 
