@@ -38,7 +38,7 @@ public class ZooServiceImpl implements ZooService
 
     @Override
     public List<Zoo> findByNameLike(String name) {
-        return zooRepository.findByZoonameContaining(name.toLowerCase());
+        return zooRepository.findByZoonameContainingIgnoringCase(name.toLowerCase());
     }
 
     @Transactional
@@ -62,9 +62,6 @@ public class ZooServiceImpl implements ZooService
 
         if(zoo.getzooname() != null){currentZoo.setzooname(zoo.getzooname());};
 
-        Date date = new Date();
-        long time = date.getTime();
-        Timestamp ts = new Timestamp(time);
 
         return zooRepository.save(currentZoo);
     }

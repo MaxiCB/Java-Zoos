@@ -12,6 +12,9 @@ import java.util.Objects;
 public class ZooTelphones extends Auditable implements Serializable
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     @ManyToOne
     @JoinColumn(name = "zooid")
     @JsonIgnoreProperties("zootelephones")
@@ -71,9 +74,9 @@ public class ZooTelphones extends Auditable implements Serializable
                 getTele());
     }
 
-    @Override
-    public String toString()
-    {
-        return "ZooTelephones{" + "zoo=" + zoo.getZooID() + ", tele=" + tele.getTelephoneID() + '}';
-    }
+//    @Override
+//    public String toString()
+//    {
+//        return "ZooTelephones{" + "zoo=" + zoo.getZooID() + ", tele=" + tele.getTelephoneID() + '}';
+//    }
 }

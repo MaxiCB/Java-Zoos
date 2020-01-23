@@ -2,6 +2,7 @@ package com.aaroncb.javazoos.javazoos.model;
 
 import com.aaroncb.javazoos.javazoos.model.Animal;
 import com.aaroncb.javazoos.javazoos.model.Zoo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,13 +15,18 @@ public class ZooAnimals extends Auditable implements Serializable
 {
 //    -- INSERT INTO zooanimals (zooid, animalid, createdby, createddate, lastmodifiedby, lastmodifieddate)
     @Id
-    @ManyToOne
-    @JoinColumn(name="zooid")
-    private Zoo zoo;
-
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     @ManyToOne
     @JoinColumn(name="animalid")
+    @JsonIgnoreProperties("zooanimals")
     private Animal animal;
+
+    @ManyToOne
+    @JoinColumn(name="zooid")
+    @JsonIgnoreProperties("zooanimals")
+    private Zoo zoo;
+
 
     public ZooAnimals(){}
 
@@ -69,11 +75,11 @@ public class ZooAnimals extends Auditable implements Serializable
                 getAnimal());
     }
 
-    @Override
-    public String toString() {
-        return "ZooAnimals{" +
-                ", zoo=" + zoo.getZooID() +
-                ", animal=" + animal.getAnimalID() +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "ZooAnimals{" +
+//                ", zoo=" + zoo.getZooID() +
+//                ", animal=" + animal.getAnimalID() +
+//                '}';
+//    }
 }

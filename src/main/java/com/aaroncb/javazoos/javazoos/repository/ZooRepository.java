@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ZooRepository extends CrudRepository<Zoo, Long> {
 
-    List<Zoo> findByZoonameContaining(String name);
+    List<Zoo> findByZoonameContainingIgnoringCase(String name);
 
     @Query(value = "SELECT COUNT(ZOONAME) FROM ZOO",
             nativeQuery = true)

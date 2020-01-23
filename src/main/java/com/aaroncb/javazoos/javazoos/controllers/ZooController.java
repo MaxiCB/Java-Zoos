@@ -2,6 +2,7 @@ package com.aaroncb.javazoos.javazoos.controllers;
 
 import com.aaroncb.javazoos.javazoos.model.Telephone;
 import com.aaroncb.javazoos.javazoos.model.Zoo;
+import com.aaroncb.javazoos.javazoos.model.ZooTelphones;
 import com.aaroncb.javazoos.javazoos.services.TelephoneService;
 import com.aaroncb.javazoos.javazoos.services.ZooService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/zoos")
@@ -68,6 +70,10 @@ public class ZooController
                                         @RequestBody
                                                 Zoo newZoo) throws URISyntaxException
     {
+        System.out.println(newZoo);
+
+
+        System.out.println("Xontroller " + newZoo.getTeles());
         newZoo = zooService.save(newZoo);
 
         HttpHeaders responseHeaders = new HttpHeaders();

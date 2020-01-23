@@ -40,10 +40,6 @@ public class Zoo
     {
         zt.setZoo(this);
     }
-        for(ZooAnimals za : animals)
-        {
-            za.setZoo(this);
-        }
         this.teles = teles;
         this.animals= animals;
     }
