@@ -21,6 +21,8 @@ public class TelephoneServiceImpl implements TelephoneService
     @Autowired
     private TelephoneRepository telephoneRepository;
 
+    @Autowired ZooService zooService;
+
     @Override
 public List<Telephone> findAll() {
     List<Telephone> telephones = new ArrayList<>();
@@ -39,10 +41,11 @@ public List<Telephone> findAll() {
     @Transactional
     @Override
     public Telephone save(Telephone telephone) {
-        Telephone newTelephone = new Telephone();
 
-        newTelephone.setPhoneType(telephone.getPhoneType());
-        newTelephone.setPhoneNumber(telephone.getPhoneNumber());
+        Zoo zoo = zooService.findByID(telephone.getZoo().getZooID());
+
+
+        Telephone newTelephone = new Telephone(zoo, telephone.getPhoneType(), telephone.getPhoneNumber());
 
         return telephoneRepository.save(newTelephone);
     }

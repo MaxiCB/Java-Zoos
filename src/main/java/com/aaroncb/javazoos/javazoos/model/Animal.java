@@ -11,20 +11,28 @@ import java.util.List;
 @Table(name="animal")
 public class Animal
 {
-
-//    -- INSERT INTO animal (animalid, animaltype, createdby, createddate, lastmodifiedby, lastmodifieddate)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long animalid;
+
     private String animaltype;
 
-    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("animal")
-    @JsonIgnore
-    private List<ZooAnimals> animals = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "zooid",
+            nullable = false)
+    @JsonIgnoreProperties("zoo")
+    private Zoo zoo;
 
     public Animal(){}
-    public Animal(String animalType){ this.animaltype = animalType; }
+    public Animal(Zoo zoo, String animalType){ this.zoo = zoo; this.animaltype = animalType; }
+
+    public Zoo getZoo() {
+        return zoo;
+    }
+
+    public void setZoo(Zoo zoo) {
+        this.zoo = zoo;
+    }
 
     public long getAnimalID() {
         return animalid;
@@ -42,20 +50,4 @@ public class Animal
         this.animaltype = animalType;
     }
 
-    public List<ZooAnimals> getAnimals() {
-        return animals;
-    }
-
-    public void setAnimals(List<ZooAnimals> animals) {
-        this.animals = animals;
-    }
-
-    @Override
-    public String toString() {
-        return "Animal{" +
-                "animalid=" + animalid +
-                ", animaltype='" + animaltype + '\'' +
-                ", animals=" + animals +
-                '}';
-    }
 }

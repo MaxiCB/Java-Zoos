@@ -1,8 +1,10 @@
 package com.aaroncb.javazoos.javazoos.controllers;
 
+import com.aaroncb.javazoos.javazoos.model.Animal;
 import com.aaroncb.javazoos.javazoos.model.Telephone;
 import com.aaroncb.javazoos.javazoos.model.Zoo;
 import com.aaroncb.javazoos.javazoos.model.ZooTelphones;
+import com.aaroncb.javazoos.javazoos.services.AnimalService;
 import com.aaroncb.javazoos.javazoos.services.TelephoneService;
 import com.aaroncb.javazoos.javazoos.services.ZooService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +26,13 @@ import java.util.Map;
 public class ZooController
 {
     @Autowired
-    private ZooService zooService;
+    ZooService zooService;
 
     @Autowired
     TelephoneService telephoneService;
+
+    @Autowired
+    AnimalService animalService;
 
     @GetMapping(value="/zoos",
                 produces = {"application/json"})
@@ -43,7 +48,6 @@ public class ZooController
             @PathVariable long id)
     {
         Zoo zoo = zooService.findByID(id);
-        System.out.println("Zoo Controller " + zoo.getTeles());
         return new ResponseEntity<>(zoo, HttpStatus.OK);
     }
 
@@ -70,10 +74,7 @@ public class ZooController
                                         @RequestBody
                                                 Zoo newZoo) throws URISyntaxException
     {
-        System.out.println(newZoo);
 
-
-        System.out.println("Xontroller " + newZoo.getTeles());
         newZoo = zooService.save(newZoo);
 
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -83,7 +84,7 @@ public class ZooController
                 .toUri();
         responseHeaders.setLocation(newZooURI);
 
-        return new ResponseEntity<>(null,
+        return new ResponseEntity<>(newZoo,
                 responseHeaders,
                 HttpStatus.CREATED);
     }
@@ -108,6 +109,16 @@ public class ZooController
                     long id)
     {
         zooService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/zoo/{zooid}/animals/{animalid}")
+    public ResponseEntity<?> deleteZooAnimal(
+            @PathVariable long zooid,
+            @PathVariable long animalid)
+    {
+        animalService.delete(animalid);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

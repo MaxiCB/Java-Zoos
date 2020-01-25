@@ -9,36 +9,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="telephone")
+@Table(name="telephone",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"zooid", "phonetype"})})
 public class Telephone extends Auditable
 {
-//    -- INSERT INTO telephone(phoneid, phonetype, phonenumber, zooid, createdby, createddate, lastmodifiedby, lastmodifieddate)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long telephoneid;
+
     private String phonetype;
     private String phonenumber;
 
-    @OneToMany(mappedBy = "tele", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("tele")
+
+    @ManyToOne
+    @JoinColumn(name = "zooid",
+            nullable = false)
     @JsonIgnore
-    private List<ZooTelphones> teles = new ArrayList<>();
+    private Zoo zoo;
 
     public Telephone() {}
 
-    public Telephone(
+    public Telephone(Zoo zoo,
                      String phonetype,
                      String phonenumber) {
+        this.zoo = zoo;
         this.phonetype = phonetype;
         this.phonenumber = phonenumber;
     }
 
-    public List<ZooTelphones> getTeles() {
-        return teles;
+    public Zoo getZoo() {
+        return zoo;
     }
 
-    public void setTeles(List<ZooTelphones> teles) {
-        this.teles = teles;
+    public void setZoo(Zoo zoo) {
+        this.zoo = zoo;
     }
 
     public long getTelephoneID() {
@@ -63,16 +67,5 @@ public class Telephone extends Auditable
 
     public void setPhoneNumber(String phoneNumber) {
         this.phonenumber = phoneNumber;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Telephone{" +
-                "telephoneid=" + telephoneid +
-                ", phonetype='" + phonetype + '\'' +
-                ", phonenumber='" + phonenumber + '\'' +
-                ", teles=" + teles +
-                '}';
     }
 }

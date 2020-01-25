@@ -13,8 +13,6 @@ import java.util.List;
 public class Zoo
 {
 
-//    -- INSERT INTO zoo (zooid, zooname, createdby, createddate, lastmodifiedby, lastmodifieddate)
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long zooid;
@@ -23,25 +21,22 @@ public class Zoo
             unique = true)
     private String zooname;
 
-    @OneToMany(mappedBy = "zoo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "zoo",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @JsonIgnoreProperties("zoo")
-    private List<ZooTelphones> teles = new ArrayList<>();
+    private List<Telephone> teles = new ArrayList<>();
 
     @OneToMany(mappedBy = "zoo", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("zoo")
-    private List<ZooAnimals> animals = new ArrayList<>();
+    private List<Animal> animals = new ArrayList<>();
+
 
     public Zoo(){}
 
-    public Zoo(String zooname, List<ZooTelphones> teles, List<ZooAnimals> animals)
+    public Zoo(String zooname)
     {
         this.zooname = zooname;
-        for(ZooTelphones zt : teles)
-    {
-        zt.setZoo(this);
-    }
-        this.teles = teles;
-        this.animals= animals;
     }
 
     public long getZooID() {
@@ -53,36 +48,31 @@ public class Zoo
     }
 
     public String getzooname() {
-        return zooname;
+        if(zooname == null){
+            return null;
+        } else {
+            return zooname.toLowerCase();
+        }
     }
 
     public void setzooname(String zooname) {
-        this.zooname = zooname;
+        this.zooname = zooname.toLowerCase();
     }
 
-    public List<ZooTelphones> getTeles() {
+    public List<Telephone> getTeles() {
         return teles;
     }
 
-    public void setTeles(List<ZooTelphones> teles) {
+    public void setTeles(List<Telephone> teles) {
         this.teles = teles;
     }
 
-    public List<ZooAnimals> getAnimals() {
+    public List<Animal> getAnimals() {
         return animals;
     }
 
-    public void setAnimals(List<ZooAnimals> animals) {
+    public void setAnimals(List<Animal> animals) {
         this.animals = animals;
     }
 
-    @Override
-    public String toString() {
-        return "Zoo{" +
-                "zooid=" + zooid +
-                ", zooname='" + zooname + '\'' +
-                ", teles=" + teles +
-                ", animals=" + animals +
-                '}';
-    }
 }
